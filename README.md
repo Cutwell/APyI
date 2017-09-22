@@ -2,9 +2,7 @@
 Python RESTful API's made stupidly simple.
 ---
 
-### 2 ways to play:
-
-#### 1
+### How to play:
  - Download the package and run setup.py to install the module.
 ```bash
 $ python3 setup.py
@@ -13,27 +11,21 @@ $ python3 setup.py
 ```python
 if __name__ == "__main__":
     import apyi
-    apyi.API.run(function_name())
-```
-
-#### 2
- - Download this package and run mac_install.py to create a command line alias.
-```bash
-$ python3 mac_install.py
-```
-
- - Then run a module as an API using the following command.
-```bash
-$ apyi run module.py
+    apyi.API.run(function_name)
 ```
 
 ### Options
 Using APyI, you can specify a variety of arguments when executing the run command. These arguments can be used for both the command line and scripted forms of APyI, as they are effectively the same code.
 
-All arguments should be specified as key word arguments, e.g.:
-```bash
-$ apyi run module.py ip="127.0.0.1" port=5000
+All arguments can be specified as key word arguments, e.g.:
+```python
+apyi.API.run(function, ip="127.0.0.1", port=5000)
 ```
+Although they can also be passed as arguments in this order:
+```python
+apyi.API.run(function, ip, port, separator)
+```
+
 #### Required arguments
 | Action | Example Usage |
 | :-: | :-: |
