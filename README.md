@@ -11,25 +11,31 @@ $ python3 setup.py install
 ```python
 if __name__ == "__main__":
     import APyI
-    APyI.API.run(function_name)
+    APyI.API.run(function_name, args=())
 ```
 
-### Options
+### Function arguments
+When calling the API.run method, you must pass the target function object as well as the arguments this function takes.
+If you intend to call the API through JQuery Ajax, you must pass the name of each argument inside the args tuple, e.g.:
+```python
+APyI.API.run(function_name, args=("string", "integer"))
+```
+ - Note: if you only intend to call the API via the URL method, you can leave args blank.
+
+### Server options
 Using APyI, you can specify a variety of arguments when executing the run command. These arguments can be used for both the command line and scripted forms of APyI, as they are effectively the same code.
 
 All arguments can be specified as key word arguments, e.g.:
 ```python
-APyI.API.run(function, ip="127.0.0.1", port=5000)
+APyI.API.run(function, args=(), ip="127.0.0.1", port=5000)
 ```
-Although they can also be passed as unlabeled arguments in this order:
-```python
-APyI.API.run(function, ip, port, separator)
-```
+
 
 #### Required arguments
 | Action | Example Usage |
 | :-: | :-: |
 | Specify a function target for API | APyI.API.run(function_name) |
+| Specify the arguments the function uses | APyI.API.run(args=("string", "integer")) |
 
 #### Optional arguments
 | Action | Example Argument | Default |
@@ -45,13 +51,22 @@ You can make a request to a APyI server the same way you would make a request to
 localhost:5000/<module name>/<string input>
 ```
 Where the <module name> is the actual file name of the module you are running, and <string input> is a single string containing the necessary inputs for the function.
-The API then returns a string of the functions output.
+ - Note: When calling the API in this method, all outputs are returned as a single string.
 
-### Uploading Files
-You can use a form to upload files to your API. Use a POST request to submit a file to the module. Currently you can only upload a single file, without any other arguments, through this method.
+You can also use JQuery and Ajax to make requests to the API. You should structure your requests like so:
+```javascript
+$.ajax({
+	url: "localhost:5000/_<module name>_ajax",
+	
+	// optional arguments are passed in a dictionary
+	data: {string:"this is an example", integer:42,},
+	
+	success: function(result){
+		// handle the request
+	}
+});
+```
+ - Note: The default fall-back for an empty/non-existent argument is a None value.
+ - Note: Unlike the URL method, output types are retained using this method.
 
-#### Argument syntax
- - To specify multiple arguments, use a unique character to separate each argument (This can be changed when you run APyI (default "+")) e.g.:
- ```
-localhost:5000/function/arg1+arg2+arg3
- ```
+If the module or target function should encounter an error during handling of a request, a server error 500 code is returned, either as a JSON or string dependent on the method used to make the request originally.
