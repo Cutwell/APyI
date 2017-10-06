@@ -1,8 +1,11 @@
 #  APyI
 from flask import Flask
 
-class API:
-    @staticmethod
+class API(object):
+    def __init__(self):
+        pass
+
+    @classmethod
     def run(module, *args, **kwargs):
         app = Flask(__name__)
 
@@ -26,16 +29,25 @@ class API:
                     separator = value
                 elif key == "module":
                     module = value
-        api_path = "/{}/<string:args>".format(module.__name__)
 
         #  define the flask functions
-        @app.route(api_path)
+        @app.route("/{}/<string:args>".format(module.__name__))
         def api(args):
             try:
                 arguments = tuple(args.split(separator))
                 return str(module(*arguments))
             except:
                 return "404"
+
+        @app.route("/{}/file_upload.html".format(module.__name__), methods=['GET', 'POST'])
+        def form():
+            if request.method == 'POST':
+                try:
+                    file = request.files['file']
+                    return str(module(file))
+                except Exception as error:
+                    print("Form without file. Error: {}".format(error))
+
 
         print(" * API available from http://{}:{}/{}/[arguments]".format(ip, port_num, module.__name__))    #  some info on how to make requests to the api
         app.run(host=ip, port=port_num)    #  run the flask server
