@@ -10,15 +10,15 @@ $ python3 setup.py install
  - Then insert this statement to the end of your module to run it as an API.
 ```python
 if __name__ == "__main__":
-    import APyI
-    APyI.API.run(function_name, args=())
+    from APyI import run
+    run(function, args=())
 ```
 
 ### Function arguments
 When calling the API.run method, you must pass the target function object as well as the arguments this function takes.
 If you intend to call the API through JQuery Ajax, you must pass the name of each argument inside the args tuple, e.g.:
 ```python
-APyI.API.run(function_name, args=("string", "integer"))
+run(function_name, args=("string", "integer"))
 ```
  - Note: if you only intend to call the API via the URL method, you can leave args blank.
 
@@ -27,7 +27,7 @@ Using APyI, you can specify a variety of arguments when executing the run comman
 
 All arguments can be specified as key word arguments, e.g.:
 ```python
-APyI.API.run(function, args=(), ip="127.0.0.1", port=5000)
+run(function, args=(), ip="127.0.0.1", port=5000)
 ```
 
 
@@ -46,17 +46,17 @@ APyI.API.run(function, args=(), ip="127.0.0.1", port=5000)
 
 
 ### Making API requests
-You can make a request to a APyI server the same way you would make a request to a regular API. Currently you can make requests in the following form:
+You can make a request to a APyI server the same way you would make a request to a regular API. You can make requests in the following form:
 ```
-localhost:5000/<module name>/<string input>
+localhost:5000/<function name>/<string input>
 ```
-Where the <module name> is the actual file name of the module you are running, and <string input> is a single string containing the necessary inputs for the function.
+Where the <function name> is the name of the function you are running, and <string input> is a single string containing the necessary inputs for the function.
  - Note: When calling the API in this method, all outputs are returned as a single string.
 
 You can also use JQuery and Ajax to make requests to the API. You should structure your requests like so:
 ```javascript
 $.ajax({
-	url: "localhost:5000/_<module name>_ajax",
+	url: "localhost:5000/_<function name>_ajax",
 	
 	// optional arguments are passed in a dictionary
 	data: {string:"this is an example", integer:42,},
