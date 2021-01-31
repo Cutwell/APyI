@@ -1,13 +1,11 @@
-# APyI
-Python RESTful API's made stupidly simple.
+# Easy-Python-Remote-Interfaces
 ---
 
-### How to play:
- - Download the package and run setup.py to install the module.
+1. Download the package and run setup.py to install the module.
 ```bash
 $ python3 setup.py install
 ```
- - Then insert this statement to the end of your module to run it as an API.
+2. Then insert this statement to the end of your module to run it as an API.
 ```python
 if __name__ == "__main__":
     from APyI import run
@@ -23,7 +21,7 @@ run(function_name, args=("string", "integer"))
  - Note: if you only intend to call the API via the URL method, you can leave args blank.
 
 ### Server options
-Using APyI, you can specify a variety of arguments when executing the run command. These arguments can be used for both the command line and scripted forms of APyI, as they are effectively the same code.
+You can specify a variety of arguments when executing the run command. These arguments can be used for both the command line and scripted forms of APyI, as they are effectively the same code.
 
 All arguments can be specified as key word arguments, e.g.:
 ```python
@@ -46,7 +44,7 @@ run(function, args=(), ip="127.0.0.1", port=5000)
 
 
 ### Making API requests
-You can make a request to a APyI server the same way you would make a request to a regular API. You can make requests in the following form:
+You can make a request to the server the same way you would make a request to a regular API. You can make requests in the following form:
 ```
 localhost:5000/<function name>/<string input>
 ```
@@ -69,4 +67,4 @@ $.ajax({
  - Note: The default fall-back for an empty/non-existent argument is a None value.
  - Note: Unlike the URL method, output types are retained using this method.
 
-If the module or target function should encounter an error during handling of a request, a server error 500 code is returned, either as a JSON or string dependent on the method used to make the request originally.
+If the module or target function should encounter an error during handling of a request, a server error 500 code is returned, either as a JSON or string, dependent on the method used to make the request originally.
